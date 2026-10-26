@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Camera Hub Botswana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff;--surface:#f1f5f8;--ink:#10202d;--muted:#566574;--line:#d9e1e8;
+  --sky:#78a0d4;--mint:#94d2b8;--sky-ink:#2c548f;--btn:#10202d;--btn-ink:#fff;--hero:#0e1a24;--hero-ink:#fff;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;--bg:#0b141c;--surface:#13202b;--ink:#e8eef3;--muted:#98a8b6;--line:#243543;
+  --sky:#78a0d4;--mint:#94d2b8;--sky-ink:#a9c4ea;--btn:#78a0d4;--btn-ink:#08141d;--hero:#060d13;}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0b141c;--surface:#13202b;--ink:#e8eef3;--muted:#98a8b6;--line:#243543;--sky:#78a0d4;--mint:#94d2b8;--sky-ink:#a9c4ea;--btn:#78a0d4;--btn-ink:#08141d;--hero:#060d13}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 Barlow,system-ui,sans-serif}
+h1,h2,h3{font-family:"Barlow Condensed","Arial Narrow",sans-serif;line-height:1.05;margin:0;letter-spacing:.01em}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.btn{display:inline-block;background:var(--btn);color:var(--btn-ink);border:0;border-radius:4px;padding:12px 22px;font:600 15px Barlow,sans-serif;cursor:pointer}
+.btn.ghost{background:transparent;color:inherit;border:1.5px solid currentColor}
+/* top strip */
+.strip{background:var(--sky);color:#08141d;font-size:14px;font-weight:500}
+.strip .wrap{display:flex;justify-content:space-between;gap:16px;padding-top:7px;padding-bottom:7px;flex-wrap:wrap}
+/* header */
+header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:18px;padding:12px 0}
+.logo{font:700 28px "Barlow Condensed",sans-serif;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.logo img{height:44px;width:auto;display:block}
+.search{flex:1;display:flex;min-width:0}
+.search input{flex:1;min-width:0;padding:11px 14px;border:1.5px solid var(--line);border-right:0;border-radius:4px 0 0 4px;background:var(--surface);color:var(--ink);font:inherit}
+.search button{border-radius:0 4px 4px 0}
+.cart{position:relative;font-weight:600;white-space:nowrap;background:none;border:0;color:inherit;font:600 16px Barlow,sans-serif;cursor:pointer}
+.cart b{background:var(--sky);color:#08141d;border-radius:99px;padding:1px 8px;margin-left:4px;font-size:13px}
+nav.cats{display:flex;gap:4px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
+nav.cats a{padding:6px 14px;border-radius:99px;font-weight:500;white-space:nowrap;font-size:15px}
+nav.cats a:hover{background:var(--surface)}
+nav.cats a.sale{color:var(--sky-ink);font-weight:600}
+/* hero */
+.hero{background:var(--hero);color:var(--hero-ink);overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center;padding-top:54px;padding-bottom:54px}
+.hero h1{font-size:clamp(44px,7vw,84px);font-weight:700}
+.hero .tagline{color:var(--mint);font:600 22px "Barlow Condensed",sans-serif;letter-spacing:.04em;margin:0 0 10px}
+.hero p{max-width:46ch;color:#b9c7d3;font-size:18px;margin:18px 0 26px}
+.hero .btn{background:var(--sky);color:#08141d}
+.hero .btn.ghost{background:transparent;color:#fff;margin-left:8px}
+.lens{width:100%;max-width:380px;height:auto;justify-self:center}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+.flag{display:flex;height:6px}.flag i{flex:1}.flag i:nth-child(1),.flag i:nth-child(5){background:var(--sky)}
+.flag i:nth-child(2),.flag i:nth-child(4){background:#fff}.flag i:nth-child(3){background:var(--mint)}
+.flag i:nth-child(3){flex:1.4}
+/* sections */
+section{padding:56px 0}
+.head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:24px;flex-wrap:wrap}
+.head h2{font-size:clamp(30px,4vw,44px)}
+.head p{margin:4px 0 0;color:var(--muted)}
+.tiles{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:20px 10px;text-align:center;font-weight:600;transition:border-color .15s}
+.tile:hover{border-color:var(--sky)}
+.tile svg{width:44px;height:44px;stroke:var(--sky-ink);fill:none;stroke-width:1.6;display:block;margin:0 auto 10px}
+/* products */
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filters button{border:1.5px solid var(--line);background:none;color:var(--ink);padding:7px 16px;border-radius:99px;font:500 15px Barlow,sans-serif;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--btn);color:var(--btn-ink);border-color:var(--btn)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.card{border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;background:var(--bg)}
+.card .pic{height:150px;background:var(--surface);display:grid;place-items:center;position:relative}
+.card .pic img{width:100%;height:100%;object-fit:cover}
+.stk{font-weight:600;font-size:13px}.s-in{color:#1f8a4c}.s-low{color:#b7791f}.s-order{color:var(--muted)}.s-out{color:#b42318}
+.card .pic svg{width:70px;height:70px;stroke:var(--sky-ink);fill:none;stroke-width:1.4}
+.tag{position:absolute;top:10px;left:10px;background:var(--ink);color:var(--bg);font-size:12px;font-weight:600;padding:2px 8px;border-radius:3px}
+.card .info{padding:14px;display:flex;flex-direction:column;gap:4px;flex:1}
+.card small{color:var(--muted)}
+.card h3{font-size:22px}
+.price{font-weight:600;font-size:18px;margin-top:auto;padding-top:8px}
+.price s{color:var(--muted);font-weight:400;font-size:14px;margin-left:6px}
+.card .btn{margin:0 14px 14px;text-align:center}
+/* services */
+.services{background:var(--surface)}
+.svc{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.svc div{border-top:3px solid var(--sky);padding-top:14px}
+.svc h3{font-size:26px;margin-bottom:6px}
+.svc p{margin:0 0 8px;color:var(--muted)}
+.svc a{font-weight:600;color:var(--sky-ink)}
+.brands{display:flex;flex-wrap:wrap;gap:12px 36px;justify-content:center;font:700 26px "Barlow Condensed",sans-serif;color:var(--muted)}
+/* visit */
+.visit{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+.visit dl{margin:0;display:grid;grid-template-columns:110px 1fr;gap:8px 12px}
+.visit dt{color:var(--muted)}.visit dd{margin:0}
+.map{background:var(--surface);border:1px solid var(--line);border-radius:6px;min-height:220px;display:grid;place-items:center;color:var(--muted);text-align:center;padding:20px}
+form.news{display:flex;gap:8px;margin-top:14px}
+form.news input{flex:1;min-width:0;padding:11px 14px;border:1.5px solid var(--line);border-radius:4px;background:var(--surface);color:var(--ink);font:inherit}
+footer{background:var(--hero);color:#b9c7d3;padding:30px 0;font-size:14px}
+footer .wrap{align-items:center;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,120px);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:6px;transition:transform .25s;z-index:30}
+.toast.on{transform:translate(-50%,0)}
+.wa{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));background:#1fa855;color:#fff;border-radius:99px;padding:12px 18px;font-weight:600;z-index:25}
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:1fr}.lens{max-width:240px;order:-1}
+  .tiles{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:repeat(2,1fr)}
+  .svc{grid-template-columns:1fr 1fr}.visit{grid-template-columns:1fr}
+}
+@media (max-width:520px){.bar{flex-wrap:wrap}.search{order:3;flex-basis:100%}.svc{grid-template-columns:1fr}.hero .btn.ghost{margin:10px 0 0}}
+</style>
+</head>
+<body>
+<div class="strip"><div class="wrap"><span id="stripL"></span><span id="stripR"></span></div></div>
+
+<header class="site"><div class="wrap">
+  <div class="bar">
+    <a class="logo" href="#top" aria-label="Camera Hub Botswana home"><img id="logoH" src="assets/logo-horizontal.png" alt="Camera Hub Botswana. Eternalizing Moments" width="280" height="64"></a>
+    <form class="search" role="search" onsubmit="return find(event)">
+      <input id="q" type="search" placeholder="Search cameras, lenses, drones…" aria-label="Search products">
+      <button class="btn" type="submit">Search</button>
+    </form>
+    <button class="cart" id="cartbtn" aria-label="Open enquiry list">Cart<b id="count">0</b></button>
+  </div>
+  <nav class="cats" aria-label="Categories">
+    <a href="#shop" data-f="Cameras">Cameras</a><a href="#shop" data-f="Lenses">Lenses</a><a href="#shop" data-f="Drones">Drones</a>
+    <a href="#shop" data-f="Accessories">Accessories</a><a href="#services">Rentals</a><a href="#services">Repairs</a><a href="#services">Trade-in</a><a class="sale" href="#shop" data-f="Used">Pre-owned</a>
+  </nav>
+</div></header>
+
+<main id="top">
+<div class="hero"><div class="wrap">
+  <div>
+    <div class="tagline">Eternalizing Moments</div><h1 id="hTitle">Botswana’s home for serious cameras.</h1>
+    <p id="hText">From first mirrorless to full production kit. Real stock in Gaborone, honest advice from people who shoot, and a warranty you can walk back into the shop with.</p>
+    <a class="btn" href="#shop">Shop new arrivals</a><a class="btn ghost" href="#services">Rent or trade in</a>
+  </div>
+  <img class="lens" src="assets/logo-vertical.png" alt="Camera Hub Botswana logo">
+</div><div class="flag"><i></i><i></i><i></i><i></i><i></i></div></div>
+
+<section><div class="wrap">
+  <div class="head"><h2>Shop by category</h2></div>
+  <div class="tiles">
+    <a class="tile" href="#shop" data-f="Cameras"><svg viewBox="0 0 48 48"><rect x="5" y="14" width="38" height="25" rx="3"/><circle cx="24" cy="26" r="8"/><path d="M17 14l2-5h10l2 5"/></svg>Cameras</a>
+    <a class="tile" href="#shop" data-f="Lenses"><svg viewBox="0 0 48 48"><rect x="12" y="8" width="24" height="32" rx="3"/><path d="M12 16h24M12 32h24"/></svg>Lenses</a>
+    <a class="tile" href="#shop" data-f="Drones"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="5"/><path d="M19 19L9 9M29 19l10-10M19 29L9 39M29 29l10 10"/><circle cx="8" cy="8" r="4"/><circle cx="40" cy="8" r="4"/><circle cx="8" cy="40" r="4"/><circle cx="40" cy="40" r="4"/></svg>Drones</a>
+    <a class="tile" href="#shop" data-f="Accessories"><svg viewBox="0 0 48 48"><path d="M24 6v22M12 42l12-14 12 14M24 28l-7 14M24 28l7 14"/></svg>Tripods &amp; bags</a>
+    <a class="tile" href="#shop" data-f="Accessories"><svg viewBox="0 0 48 48"><rect x="8" y="10" width="32" height="28" rx="3"/><path d="M8 18h32M16 10v8"/></svg>Memory &amp; power</a>
+    <a class="tile" href="#shop" data-f="Used"><svg viewBox="0 0 48 48"><path d="M10 24a14 14 0 0 1 24-10l4 4M38 24a14 14 0 0 1-24 10l-4-4"/><path d="M38 8v10H28M10 40V30h10"/></svg>Pre-owned</a>
+  </div>
+</div></section>
+
+<section id="shop" style="padding-top:0"><div class="wrap">
+  <div class="head">
+    <div><h2>New arrivals &amp; best sellers</h2><p>Sample products and prices. Replace with your live stock.</p></div>
+    <div class="filters" role="group" aria-label="Filter products" id="filters">
+      <button aria-pressed="true" data-f="All">All</button><button aria-pressed="false" data-f="Cameras">Cameras</button><button aria-pressed="false" data-f="Lenses">Lenses</button><button aria-pressed="false" data-f="Drones">Drones</button><button aria-pressed="false" data-f="Accessories">Accessories</button><button aria-pressed="false" data-f="Used">Pre-owned</button>
+    </div>
+  </div>
+  <div class="grid" id="grid"></div>
+</div></section>
+
+<section class="services" id="services"><div class="wrap">
+  <div class="head"><h2>More than a shop</h2></div>
+  <div class="svc">
+    <div><h3>Gear rentals</h3><p>Rent bodies, lenses and lighting by the day or week for weddings, events and shoots.</p><a href="#visit">Ask about availability</a></div>
+    <div><h3>Trade-in</h3><p>Bring in your old camera for a quote and put the value toward an upgrade.</p><a href="#visit">Get a quote</a></div>
+    <div><h3>Repairs &amp; sensor cleaning</h3><p>Diagnostics, cleaning and servicing, with a clear quote before any work starts.</p><a href="#visit">Book a service</a></div>
+    <div><h3>Photo printing</h3><p>Passport photos, prints and canvas for the home, office or gallery wall.</p><a href="#visit">See sizes</a></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="head"><h2>Brands we stock</h2></div>
+  <div class="brands"><span>Canon</span><span>Nikon</span><span>Sony</span><span>Fujifilm</span><span>Panasonic</span><span>DJI</span><span>GoPro</span><span>Godox</span><span>Manfrotto</span><span>SanDisk</span></div>
+</div></section>
+
+<section id="visit" style="padding-top:0"><div class="wrap visit">
+  <div>
+    <h2 style="font-size:44px;margin-bottom:16px">Visit the shop</h2>
+    <dl>
+      <dt>Address</dt><dd id="vAddr"></dd>
+      <dt>Phone</dt><dd id="vPhone"></dd>
+      <dt>Email</dt><dd id="vMail"></dd>
+      <dt>Hours</dt><dd id="vHours"></dd>
+    </dl>
+    <p style="margin-top:22px;margin-bottom:0">Get new stock and rental offers by email.</p>
+    <form class="news" onsubmit="event.preventDefault();toast('Subscribed. Thank you!');this.reset()">
+      <input type="email" required placeholder="Your email" aria-label="Email address"><button class="btn">Subscribe</button>
+    </form>
+  </div>
+  <div class="map" id="map">Embed your Google Map here<br>(add your shop’s map link)</div>
+</div></section>
+</main>
+
+<footer><div class="wrap"><img id="logoF" alt="Camera Hub Botswana" height="40" style="height:40px;width:auto"><span>© 2026 Camera Hub Botswana. All rights reserved.</span><span>Prices in Botswana Pula (BWP) and include VAT.</span></div></footer>
+<a class="wa" id="wa" href="#" target="_blank" rel="noopener">WhatsApp us</a>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+var P=[],S={},cart=[],cur="All",term="";
+var icon='<svg viewBox="0 0 48 48"><rect x="5" y="14" width="38" height="25" rx="3"/><circle cx="24" cy="26" r="8"/><path d="M17 14l2-5h10l2 5"/></svg>';
+var SL={in:"In stock",low:"Low stock",order:"On order",out:"Out of stock"};
+function $(i){return document.getElementById(i)}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function R(n){return"P"+Number(n).toLocaleString("en-US")}
+function wa(m){return"https://wa.me/"+(S.whatsapp||"")+"?text="+encodeURIComponent(m)}
+function draw(){var h="",n=0;
+  P.forEach(function(p,i){
+    if(p.visible===false)return;
+    if(cur!=="All"&&p.category!==cur)return;
+    if(term&&(p.name+" "+p.desc+" "+p.category).toLowerCase().indexOf(term)<0)return;
+    n++;var st=p.stock||"in",out=st==="out";
+    h+='<article class="card"><div class="pic">'+(p.tag?'<span class="tag">'+esc(p.tag)+'</span>':'')+(p.image?'<img src="'+esc(p.image)+'" alt="'+esc(p.name)+'" loading="lazy">':icon)+'</div><div class="info"><small>'+(p.category==="Used"?"Pre-owned":esc(p.category))+'</small><h3>'+esc(p.name)+'</h3><small>'+esc(p.desc)+'</small><span class="stk s-'+st+'">'+SL[st]+'</span><div class="price">'+R(p.price)+(p.oldPrice?'<s>'+R(p.oldPrice)+'</s>':'')+'</div></div>'
+    +(out?'<a class="btn ghost" target="_blank" rel="noopener" href="'+esc(wa("Hi Camera Hub, when will the "+p.name+" be back in stock?"))+'">Ask on WhatsApp</a>':'<button class="btn" onclick="add('+i+')">Add to cart</button>')+'</article>';
+  });
+  $("grid").innerHTML=n?h:'<p>No products match. Try a different search or ask us on WhatsApp.</p>';
+}
+function setF(f){cur=f;document.querySelectorAll("#filters button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.f===f)});draw()}
+function add(i){cart.push(i);$("count").textContent=cart.length;toast(P[i].name+" added")}
+function toast(m){var t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove("on")},2200)}
+function find(e){e.preventDefault();term=$("q").value.trim().toLowerCase();setF("All");$("shop").scrollIntoView();return false}
+$("filters").addEventListener("click",function(e){if(e.target.dataset.f)setF(e.target.dataset.f)});
+document.querySelectorAll("a[data-f]").forEach(function(a){a.addEventListener("click",function(){term="";setF(a.dataset.f)})});
+$("cartbtn").onclick=function(){
+  if(!cart.length)return toast("Your cart is empty");
+  var t=0,l=cart.map(function(i){t+=Number(P[i].price)||0;return"- "+P[i].name+" ("+R(P[i].price)+")"});
+  window.open(wa("Hi Camera Hub, I would like to order:\n"+l.join("\n")+"\nTotal: "+R(t)),"_blank")};
+function fill(){
+  $("stripL").textContent=S.promo||"";$("stripR").textContent="Call or WhatsApp: "+(S.phone||"");
+  if(S.heroTitle)$("hTitle").textContent=S.heroTitle;if(S.heroText)$("hText").textContent=S.heroText;
+  $("vAddr").textContent=S.address||"";$("vPhone").textContent=S.phone||"";$("vMail").textContent=S.email||"";
+  $("vHours").innerHTML=(S.hours||[]).map(esc).join("<br>");
+  $("wa").href=wa("Hi Camera Hub, I have a question.");
+  if(S.mapEmbed)$("map").innerHTML='<iframe src="'+esc(S.mapEmbed)+'" title="Map" style="border:0;width:100%;height:100%;min-height:260px" loading="lazy"></iframe>';
+}
+$("logoF").src=$("logoH").src;
+Promise.all([fetch("data/products.json").then(function(r){return r.json()}),fetch("data/site.json").then(function(r){return r.json()})])
+.then(function(d){P=d[0];S=d[1];fill();draw()})
+.catch(function(){$("grid").innerHTML="<p>Products could not be loaded. Open the site through GitHub Pages or a local web server, not by double-clicking the file.</p>"});
+</script>
+</body>
+</html>

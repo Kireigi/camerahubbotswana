@@ -1,0 +1,234 @@
+[
+  {
+    "name": "Canon EOS R100 Travel Kit (18-45mm, bag, SD)",
+    "category": "Cameras",
+    "desc": "Entry-level mirrorless kit with 18-45mm lens, bag and SD card",
+    "price": 13800,
+    "oldPrice": "",
+    "tag": "",
+    "image": "",
+    "stock": "in",
+    "visible": true
+  },
+  {
+    "name": "Canon EOS R100 with 18-45mm and 75-300mm Lenses",
+    "category": "Cameras",
+    "desc": "Entry-level APS-C mirrorless with two lenses",
+    "price": 14800,
+    "oldPrice": "",
+    "tag": "",
+    "image": "",
+    "stock": "in",
+    "visible": true
+  },
+  {
+    "name": "Canon EOS R50 Mirrorless Camera",
+    "category": "Cameras",
+    "desc": "Compact 24MP APS-C mirrorless camera",
+    "price": 15600,
+    "oldPrice": "",
+    "tag": "",
+    "image": "",
+    "stock": "in",
+    "visible": true
+  },
+  {
+    "name": "Canon EOS R50 V Mirrorless Camera Body",
+    "category": "Cameras",
+    "desc": "Compact mirrorless body for video creators",
+    "price": 18500,
+    "oldPrice": "",
+    "tag": "",
+    "image": "",
+    "stock": "in",
+    "visible": true
+  },
+  {
+    "name": "Canon EOS R100 with 18-45mm and 55-210mm Lens Kit",
+    "category": "Cameras",
+    "desc": "Entry-level APS-C mirrorless with two zoom lenses",
+    "price": 18900,
+    "oldPrice": "",
+    "tag": "",
+    "image": "",
+    "stock": "in",
+    "visible": true
+  },
+  {
+    "name": "Canon EOS R10 Mirrorless Camera Body",
+    "category": "Cameras",
+    "desc": "24MP APS-C, fast autofocus, 4K video",
+    "price": 23995,
+    "oldPrice": "",
+    "tag": "",
+    "image": "",
+    "stock": "in",
+    "visible": true
+  },
+  {
+    "name": "Canon EOS R10 with 18-45mm Lens",
+    "category": "Cameras",
+    "desc": "24MP APS-C mirrorless with 18-45mm kit lens",
+    "price": 26500,
+    "oldPrice": "",
+    "tag": "",
+    "image": "",
+    "stock": "in",
+    "visible": true
+  },
+  {
+    "name": "Canon EOS R10 with 18-150mm Lens",
+    "category": "Cameras",
+    "desc": "24MP APS-C mirrorless with 18-150mm all-round lens",
+    "price": 32400,
+    "oldPrice": "",
+    "tag": "",
+    "image": "",
+    "stock": "in",
+    "visible": true
+  },
+  {
+    "name": "Canon EOS R7 Mirrorless Camera Body",
+    "category": "Cameras",
+    "desc": "32.5MP APS-C, 30 fps, 5-axis stabilisation",
+    "price": 37800,
+    "oldPrice": "",
+    "tag": "",
+    "image": "",
+    "stock": "in",
+    "visible": true
+  },
+  {
+    "name": "Canon EOS R5 C Mirrorless Cinema Camera",
+    "category": "Cameras",
+    "desc": "45MP full-frame hybrid cinema camera",
+    "price": 96800,
+    "oldPrice": "",
+    "tag": "",
+    "image": "",
+    "stock": "in",
+    "visible": true
+  },
+  {
+    "name": "Canon EOS R6 Mark II with 24-105mm f/4 Lens",
+    "category": "Cameras",
+    "desc": "Full-frame hybrid camera with RF 24-105mm f/4L lens",
+    "price": 91299,
+    "oldPrice": "",
+    "tag": "",
+    "image": "",
+    "stock": "in",
+    "visible": true
+  },
+  {
+    "name": "Canon EOS R5 Mark II Mirrorless Camera",
+    "category": "Cameras",
+    "desc": "45MP stacked full-frame, 8K video",
+    "price": 97000,
+    "oldPrice": "",
+    "tag": "",
+    "image": "",
+    "stock": "in",
+    "visible": true
+  },
+  {
+    "name": "Canon EOS R3 Mirrorless Camera Body",
+    "category": "Cameras",
+    "desc": "Professional full-frame body for sport and action",
+    "price": 109999,
+    "oldPrice": "",
+    "tag": "",
+    "image": "",
+    "stock": "in",
+    "visible": true
+  },
+  {
+    "name": "Canon EOS R1 Mirrorless Camera",
+    "category": "Cameras",
+    "desc": "Canon's flagship professional full-frame camera",
+    "price": 145995,
+    "oldPrice": "",
+    "tag": "",
+    "image": "",
+    "stock": "in",
+    "visible": true
+  },
+  {
+    "name": "Canon EOS R7 with 18-150mm Lens",
+    "category": "Cameras",
+    "desc": "32.5MP APS-C with 18-150mm all-round lens",
+    "price": 44599,
+    "oldPrice": "",
+    "tag": "",
+    "image": "",
+    "stock": "in",
+    "visible": true
+  },
+  {
+    "name": "Canon EOS R6 Mark III Mirrorless Camera",
+    "category": "Cameras",
+    "desc": "32.5MP full-frame, 7K RAW video, 40 fps",
+    "price": 64800,
+    "oldPrice": "",
+    "tag": "",
+    "image": "",
+    "stock": "in",
+    "visible": true
+  },
+  {
+    "name": "Canon EOS R6 Mark III with 24-105mm f/4-7.1 Lens",
+    "category": "Cameras",
+    "desc": "32.5MP full-frame with RF 24-105mm f/4-7.1 lens",
+    "price": 74595,
+    "oldPrice": "",
+    "tag": "",
+    "image": "",
+    "stock": "in",
+    "visible": true
+  },
+  {
+    "name": "Canon EOS R6 Mark III with 24-105mm f/4L IS USM Lens",
+    "category": "Cameras",
+    "desc": "32.5MP full-frame with RF 24-105mm f/4L lens",
+    "price": 85699,
+    "oldPrice": "",
+    "tag": "",
+    "image": "",
+    "stock": "in",
+    "visible": true
+  },
+  {
+    "name": "Canon EOS R5 Mirrorless Camera",
+    "category": "Cameras",
+    "desc": "45MP full-frame mirrorless, 8K video",
+    "price": 54999,
+    "oldPrice": "",
+    "tag": "",
+    "image": "",
+    "stock": "in",
+    "visible": true
+  },
+  {
+    "name": "Canon EOS R5 Mark II with 24-105mm f/4 Lens",
+    "category": "Cameras",
+    "desc": "45MP stacked full-frame with RF 24-105mm f/4L lens",
+    "price": 115999,
+    "oldPrice": "",
+    "tag": "",
+    "image": "",
+    "stock": "in",
+    "visible": true
+  },
+  {
+    "name": "Canon EOS C80 Digital Cinema Camera Body (RF Mount)",
+    "category": "Cameras",
+    "desc": "6K full-frame cinema camera with built-in ND filters",
+    "price": 122999,
+    "oldPrice": "",
+    "tag": "",
+    "image": "",
+    "stock": "in",
+    "visible": true
+  }
+]
+ 

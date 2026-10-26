@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Camera Hub Botswana: Admin</title>
+<style>
+:root{--ink:#10202d;--mut:#566574;--line:#d9e1e8;--bg:#f1f5f8;--blue:#78a0d4;--dk:#2c548f;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;font:16px/1.5 system-ui,sans-serif;color:var(--ink);background:var(--bg)}
+header{background:#fff;border-bottom:1px solid var(--line);padding:10px 20px;display:flex;gap:14px;align-items:center;position:sticky;top:0;z-index:5;flex-wrap:wrap}
+header img{height:36px}header b{flex:1}
+main{max-width:1000px;margin:0 auto;padding:20px}
+.box{background:#fff;border:1px solid var(--line);border-radius:8px;padding:18px;margin-bottom:14px}
+label{display:block;font-size:14px;color:var(--mut);margin:10px 0 3px}
+input,select,textarea{width:100%;padding:9px 10px;border:1.5px solid var(--line);border-radius:5px;font:inherit;background:#fff;color:var(--ink)}
+button{font:600 15px system-ui;padding:10px 18px;border:0;border-radius:5px;background:var(--dk);color:#fff;cursor:pointer}
+button.alt{background:#fff;color:var(--dk);border:1.5px solid var(--dk)}button.del{background:#fff;color:#b42318;border:1.5px solid #e5b4ae;padding:6px 12px}
+button:disabled{opacity:.5}
+.tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.row{display:grid;grid-template-columns:90px 1fr 1fr;gap:10px 14px;align-items:start}
+.row .full{grid-column:2/4}.thumb{width:90px;height:90px;border:1px solid var(--line);border-radius:6px;object-fit:cover;background:var(--bg)}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.chk{display:flex;gap:8px;align-items:center;margin-top:8px}.chk input{width:auto}
+#msg{padding:10px 14px;border-radius:6px;margin-bottom:14px;display:none}
+#msg.ok{display:block;background:#e3f4ea;color:#14532d}#msg.err{display:block;background:#fde7e4;color:#7a1c12}
+small{color:var(--mut)}
+@media(max-width:700px){.row{grid-template-columns:1fr}.row .full{grid-column:1}.g3{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header><img src="assets/logo-horizontal.png" alt="Camera Hub Botswana"><b>Admin</b><button id="pub" class="alt" hidden onclick="pub()">Publish changes</button></header>
+<main>
+<div id="msg" role="status"></div>
+
+<section id="login" class="box">
+  <h2 style="margin-top:0">Connect to your website</h2>
+  <p><small>Your GitHub details are only used from this browser to save changes to your repository. See README.md for how to create the token.</small></p>
+  <label>GitHub username or organisation</label><input id="o" autocomplete="off">
+  <label>Repository name</label><input id="r" autocomplete="off">
+  <label>Branch</label><input id="b" value="main">
+  <label>Access token</label><input id="t" type="password" autocomplete="off">
+  <div class="chk"><input type="checkbox" id="rem"><span>Remember me on this device</span></div>
+  <p><button onclick="connect()">Connect</button></p>
+</section>
+
+<section id="app" hidden>
+  <div class="tabs"><button onclick="tab('p')">Products &amp; stock</button><button class="alt" onclick="tab('s')">Site details</button><button class="alt" onclick="dl()">Download backup</button></div>
+  <div id="pTab">
+    <p><button onclick="addP()">+ Add product</button> <small>Remember to press “Publish changes” (top right) when done.</small></p>
+    <input id="f" placeholder="Search products…" oninput="rp()" style="margin-bottom:14px">
+    <div id="list"></div>
+  </div>
+  <div id="sTab" class="box" hidden></div>
+</section>
+</main>
+
+<script>
+var $=function(i){return document.getElementById(i)},C={},P=[],S={},sha={},imgs={},dirty=false;
+var CATS=[["Cameras","Cameras"],["Lenses","Lenses"],["Drones","Drones"],["Accessories","Accessories"],["Used","Pre-owned"]];
+var STK=[["in","In stock"],["low","Low stock"],["order","On order"],["out","Out of stock"]];
+var SF=[["promo","Top banner text"],["heroTitle","Homepage headline"],["heroText","Homepage intro text"],["phone","Phone number (shown on site)"],["whatsapp","WhatsApp number, digits only, e.g. 26771234567"],["email","Email"],["address","Shop address"],["hours","Opening hours (one line each)"],["mapEmbed","Google Maps embed link (src of the iframe)"]];
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function msg(t,k){var m=$("msg");m.textContent=t;m.className=t?k:"";if(t)scrollTo(0,0)}
+function enc(s){return btoa(unescape(encodeURIComponent(s)))}
+function dec(s){return decodeURIComponent(escape(atob(s.replace(/\n/g,""))))}
+function api(path,o){o=o||{};var u="https://api.github.com/repos/"+C.owner+"/"+C.repo+"/contents/"+path+(o.method?"":"?ref="+encodeURIComponent(C.branch));
+  o.headers={Authorization:"Bearer "+C.token,Accept:"application/vnd.github+json"};
+  return fetch(u,o).then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.message||r.status);return j})})}
+function put(path,b64,s){var b={message:"Update "+path+" (admin)",content:b64,branch:C.branch};if(s)b.sha=s;return api(path,{method:"PUT",body:JSON.stringify(b)})}
+async function connect(){
+  C={owner:$("o").value.trim(),repo:$("r").value.trim(),branch:$("b").value.trim()||"main",token:$("t").value.trim()};
+  try{var a=await api("data/products.json"),s=await api("data/site.json");
+    sha.p=a.sha;sha.s=s.sha;P=JSON.parse(dec(a.content));S=JSON.parse(dec(s.content));
+    if($("rem").checked)localStorage.setItem("chb",JSON.stringify(C));
+    $("login").hidden=true;$("app").hidden=false;$("pub").hidden=false;msg("");rp();rs();
+  }catch(e){msg("Could not connect: "+e.message+". Check the username, repository name and token.","err")}}
+function tab(t){$("pTab").hidden=t!=="p";$("sTab").hidden=t!=="s"}
+function rp(){var q=($("f").value||"").toLowerCase(),h="";
+  P.forEach(function(p,i){if(q&&(p.name+" "+p.category).toLowerCase().indexOf(q)<0)return;
+    var im=p.image?(imgs[p.image]?"data:image/jpeg;base64,"+imgs[p.image]:p.image):"";
+    h+='<div class="box row"><div><img class="thumb" '+(im?'src="'+esc(im)+'"':'alt=""')+'><input type="file" accept="image/*" onchange="up('+i+',this)" style="margin-top:6px;font-size:12px"></div>'
+    +'<div><label>Name</label><input data-i="'+i+'" data-k="name" value="'+esc(p.name)+'" oninput="ed(this)"></div>'
+    +'<div><label>Category</label><select data-i="'+i+'" data-k="category" onchange="ed(this)">'+CATS.map(function(c){return'<option value="'+c[0]+'"'+(p.category===c[0]?" selected":"")+'>'+c[1]+'</option>'}).join("")+'</select></div>'
+    +'<div class="full g3"><div><label>Price (Pula)</label><input type="number" min="0" data-i="'+i+'" data-k="price" value="'+esc(p.price)+'" oninput="ed(this)"></div>'
+    +'<div><label>Old price (optional)</label><input type="number" min="0" data-i="'+i+'" data-k="oldPrice" value="'+esc(p.oldPrice)+'" oninput="ed(this)"></div>'
+    +'<div><label>Stock</label><select data-i="'+i+'" data-k="stock" onchange="ed(this)">'+STK.map(function(c){return'<option value="'+c[0]+'"'+(p.stock===c[0]?" selected":"")+'>'+c[1]+'</option>'}).join("")+'</select></div></div>'
+    +'<div class="full g3"><div><label>Short description</label><input data-i="'+i+'" data-k="desc" value="'+esc(p.desc)+'" oninput="ed(this)"></div>'
+    +'<div><label>Label (New, Sale…)</label><input data-i="'+i+'" data-k="tag" value="'+esc(p.tag)+'" oninput="ed(this)"></div>'
+    +'<div class="chk"><input type="checkbox" data-i="'+i+'" data-k="visible" '+(p.visible!==false?"checked":"")+' onchange="ed(this)"><span>Show on website</span></div></div>'
+    +'<div class="full"><button class="del" onclick="delP('+i+')">Delete product</button></div></div>'});
+  $("list").innerHTML=h||"<p>No products found.</p>"}
+function ed(el){var p=P[el.dataset.i],k=el.dataset.k;
+  p[k]=el.type==="checkbox"?el.checked:el.type==="number"?(el.value===""?"":+el.value):el.value;dirty=true}
+function addP(){P.unshift({name:"New product",category:"Cameras",desc:"",price:0,oldPrice:"",tag:"New",image:"",stock:"in",visible:true});dirty=true;$("f").value="";rp()}
+function delP(i){if(confirm("Delete “"+P[i].name+"”?")){P.splice(i,1);dirty=true;rp()}}
+function up(i,inp){var f=inp.files[0];if(!f)return;var img=new Image();
+  img.onload=function(){var m=900,s=Math.min(1,m/Math.max(img.width,img.height)),c=document.createElement("canvas");
+    c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);var x=c.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,c.width,c.height);x.drawImage(img,0,0,c.width,c.height);
+    var n="images/"+(P[i].name||"product").toLowerCase().replace(/[^a-z0-9]+/g,"-").slice(0,40)+"-"+Date.now().toString(36)+".jpg";
+    imgs[n]=c.toDataURL("image/jpeg",.82).split(",")[1];P[i].image=n;dirty=true;rp()};
+  img.src=URL.createObjectURL(f)}
+function rs(){$("sTab").innerHTML=SF.map(function(f){var v=S[f[0]],big=f[0]==="hours"||f[0]==="heroText"||f[0]==="mapEmbed";
+  if(f[0]==="hours")v=(v||[]).join("\n");
+  return"<label>"+f[1]+"</label>"+(big?'<textarea rows="'+(f[0]==="hours"?4:3)+'" data-k="'+f[0]+'" oninput="es(this)">'+esc(v)+"</textarea>":'<input data-k="'+f[0]+'" value="'+esc(v)+'" oninput="es(this)">')}).join("")}
+function es(el){var k=el.dataset.k;S[k]=k==="hours"?el.value.split("\n").filter(Boolean):el.value;dirty=true}
+async function pub(){var b=$("pub");b.disabled=true;b.textContent="Publishing…";
+  try{for(var n in imgs)await put(n,imgs[n]);
+    var r=await put("data/products.json",enc(JSON.stringify(P,null,2)+"\n"),sha.p);sha.p=r.content.sha;
+    r=await put("data/site.json",enc(JSON.stringify(S,null,2)+"\n"),sha.s);sha.s=r.content.sha;
+    imgs={};dirty=false;msg("Published. Your website will show the changes in about a minute.","ok")}
+  catch(e){msg("Could not publish: "+e.message,"err")}
+  b.disabled=false;b.textContent="Publish changes"}
+function dl(){var a=document.createElement("a");a.href="data:application/json;charset=utf-8,"+encodeURIComponent(JSON.stringify({products:P,site:S},null,2));a.download="camera-hub-backup.json";a.click()}
+window.onbeforeunload=function(){if(dirty)return"You have unpublished changes."};
+try{var sv=JSON.parse(localStorage.getItem("chb")||"null");if(sv){$("o").value=sv.owner;$("r").value=sv.repo;$("b").value=sv.branch;$("t").value=sv.token;$("rem").checked=true}}catch(e){}
+</script>
+</body>
+</html>
